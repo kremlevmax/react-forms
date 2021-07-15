@@ -1,54 +1,37 @@
-import { useState } from "react";
+import useForm from "../hooks/use-form";
 
 const BasicForm = (props) => {
-  const [name, setName] = useState("");
-  const [nameOnBlur, setNameOnBlur] = useState(false);
+  const {
+    formValue: name,
+    isFormValueValid: isNameValueValid,
+    isFormValid: isNameFormValid,
+    formChangeHandler: nameOnChangeHandler,
+    formOnBlurHandler: nameOnBlurHandler,
+  } = useForm((value) => value.trim() !== "");
 
-  const [lastName, setLastName] = useState("");
-  const [lastNameOnBlur, setLastNameOnBlur] = useState(false);
+  const {
+    formValue: lastName,
+    isFormValueValid: isLastNameValueValid,
+    isFormValid: isLastNameFormValid,
+    formChangeHandler: lastNameOnChangeHandler,
+    formOnBlurHandler: lastNameOnBlurHandler,
+  } = useForm((value) => value.trim() !== "");
 
-  const [email, setEmail] = useState("");
-  const [emailOnBlur, setEmailOnBlur] = useState(false);
+  const {
+    formValue: email,
+    isFormValueValid: isEmailValueValid,
+    isFormValid: isEmailFormValid,
+    formChangeHandler: emailOnChangeHandler,
+    formOnBlurHandler: emailOnBlurHandler,
+  } = useForm((value) => value.includes("@") && value.includes("."));
 
-  const nameOnChangeHandler = (event) => {
-    setName(event.target.value);
-  };
-
-  const nameOnBlurHandler = (event) => {
-    setNameOnBlur(true);
-  };
-
-  const isNameValueValid = name.trim() !== "";
-  const isNameFormValid = !(!isNameValueValid && nameOnBlur);
   const nameFormClass = isNameFormValid
     ? "form-control"
     : "form-control invalid";
 
-  const lastNameOnChangeHandler = (event) => {
-    setLastName(event.target.value);
-  };
-
-  const lastNameOnBlurHandler = (event) => {
-    setLastNameOnBlur(true);
-  };
-
-  const isLastNameValueValid = lastName.trim() !== "";
-  const isLastNameFormValid = !(!isLastNameValueValid && lastNameOnBlur);
-
   const lastNameFormClass = isLastNameFormValid
     ? "form-control"
     : "form-control invalid";
-
-  const emailOnChangeHandler = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const emailOnBlurHandler = (event) => {
-    setEmailOnBlur(true);
-  };
-
-  const isEmailValueValid = email.includes("@") && email.includes(".");
-  const isEmailFormValid = !(!isEmailValueValid && emailOnBlur);
 
   const emailFormClass = isEmailFormValid
     ? "form-control"
@@ -59,12 +42,6 @@ const BasicForm = (props) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    setName("");
-    setNameOnBlur(false);
-    setLastName("");
-    setLastNameOnBlur(false);
-    setEmail("");
-    setEmailOnBlur(false);
   };
 
   return (
